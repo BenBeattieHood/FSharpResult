@@ -23,3 +23,5 @@ validated {
         sprintf "Success value: %s" error
         |> System.Console.WriteLine 
 ```
+
+Huge thanks to the FSharpx validated code, which this is really just a rehash of, minus some bits I didn't agree with (Choice), plus some helpful things around options and sequences.
