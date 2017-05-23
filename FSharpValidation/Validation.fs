@@ -96,18 +96,18 @@ type ValidatedBuilder() =
 let validated = ValidatedBuilder()
 
 
-let ofOptionM 
-    (noneM: unit -> 'TNoValue) 
+let ofOptionF 
+    (noneF: unit -> 'TNoValue) 
     (maybeValue:'TValue option)
     : Result<'TValue, 'TNoValue> =
 
     match maybeValue with
     | Some value -> value |> Success
-    | None -> noneM() |> Failure
+    | None -> noneF() |> Failure
 
 
 let ofOption none =
-    ofOptionM (fun _ -> none)
+    ofOptionF (fun _ -> none)
 
 
 let ofSeq
