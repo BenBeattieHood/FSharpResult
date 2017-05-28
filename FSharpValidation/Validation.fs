@@ -1,52 +1,45 @@
 ﻿module Validation
 
-type Result<'TSuccess, 'TFailure> = 
-| Success of 'TSuccess
-| Failure of 'TFailure
+open Microsoft.FSharp.Core
 
-let (|Success|Failure|) =
-    function
-    | Success value -> Success value
-    | Failure error -> Failure error
-
-/// If Result is Success, return its value.
+/// If Result is Result.Ok, return its value.
 /// Otherwise throw ArgumentException.
 let get =
     function
-    | Success value -> value
-    | Failure error -> invalidArg "result" (sprintf "The result was Failure: '%A'" error) |> raise
+    | Result.Ok value -> value
+    | Result.Error error -> invalidArg "result" (sprintf "The result was Result.Error: '%A'" error) |> raise
     
 /// Wraps a function, encapsulates any exception thrown within to a Choice
 let tryWith 
-    (f: unit -> 'TSuccess) 
-    (onError: System.Exception -> 'TFailure) 
-    : Result<'TSuccess, 'TFailure> =
+    (f: unit -> 'TOk) 
+    (onError: System.Exception -> 'TError) 
+    : Result<'TOk, 'TError> =
     try
-        f() |> Success
+        f() |> Result.Ok
     with
-        ex -> onError ex |> Failure
+        ex -> onError ex |> Result.Error
 
 /// Attempts to cast an object.
-/// Stores the cast value in Success if successful, otherwise stores the exception in Failure
+/// Stores the cast value in Result.Ok if successful, otherwise stores the exception in Result.Error
 let cast (o: obj) = tryWith (unbox o) (fun ex -> ex.Message)
 
 /// Sequential application
 let ap x f =
     match f,x with
-    | Success f, Success x -> Success (f x)
-    | Failure e, _            -> Failure e
-    | _           , Failure e -> Failure e
+    | Result.Ok f, Result.Ok x -> Result.Ok (f x)
+    | Result.Error e, _            -> Result.Error e
+    | _           , Result.Error e -> Result.Error e
     
 /// Sequential application
 let inline (<*>) f x = ap x f
 
 /// Maps both parts of a Result.
-/// Applies the first function if Result is Success.
+/// Applies the first function if Result is Result.Ok.
 /// Otherwise applies the second function
 let inline bimap f1 f2 = 
     function
-    | Success x -> Success (f1 x)
-    | Failure x -> Failure (f2 x)
+    | Result.Ok x -> Result.Ok (f1 x)
+    | Result.Error x -> Result.Error (f2 x)
 
 /// Transforms a Result's success value by using a specified mapping function.
 let map f =
@@ -70,8 +63,8 @@ let inline ( <*) a b = lift2 (fun z _ -> z) a b
 /// Monadic bind
 let bind f = 
     function
-    | Success x -> f x
-    | Failure x -> Failure x
+    | Result.Ok x -> f x
+    | Result.Error x -> Result.Error x
     
 /// Sequentially compose two actions, passing any value produced by the first as an argument to the second.
 let inline (>>=) m f = bind f m
@@ -88,12 +81,12 @@ let inline (>=>) f g = fun x -> f x >>= g
 /// Right-to-left Kleisli composition
 let inline (<=<) x = FSharpx.Functional.Prelude.flip (>=>) x
 
-type ValidatedBuilder() = 
-    member this.Return a = Success a
+type ResultBuilder() = 
+    member this.Return a = Result.Ok a
     member this.Bind (m, f) = bind f m
     member this.ReturnFrom m = m
 
-let validated = ValidatedBuilder()
+let result = ResultBuilder()
 
 
 let ofOptionF 
@@ -102,8 +95,8 @@ let ofOptionF
     : Result<'TValue, 'TNoValue> =
 
     match maybeValue with
-    | Some value -> value |> Success
-    | None -> noneF() |> Failure
+    | Some value -> value |> Result.Ok
+    | None -> noneF() |> Result.Error
 
 
 let ofOption none =
@@ -111,14 +104,14 @@ let ofOption none =
 
 
 let ofSeq
-    (source: Result<'TSuccess, 'TFailure> seq)
-    : Result<'TSuccess seq, 'TFailure seq> =
+    (source: Result<'TOk, 'TError> seq)
+    : Result<'TOk seq, 'TError seq> =
 
     let failures =
         source
         |> Seq.choose
             (function
-                | Result.Failure error -> Some error
+                | Result.Error error -> Some error
                 | _ -> None
             )
     
@@ -126,11 +119,11 @@ let ofSeq
         source
         |> Seq.choose
             (function
-                | Result.Success value -> Some value
-                | Result.Failure error -> None
+                | Result.Ok value -> Some value
+                | Result.Error error -> None
             )
-        |> Result.Success
+        |> Result.Ok
     else
         failures
-        |> Result.Failure
+        |> Result.Error
     

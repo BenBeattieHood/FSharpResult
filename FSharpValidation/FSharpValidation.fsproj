@@ -9,10 +9,11 @@
     <OutputType>Library</OutputType>
     <RootNamespace>FSharpValidation</RootNamespace>
     <AssemblyName>FSharpValidation</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <TargetFSharpCoreVersion>4.4.1.0</TargetFSharpCoreVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Name>FSharpValidation</Name>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,6 +50,11 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+  </Target>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="CoreExt.fs" />
@@ -57,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Control.AsyncSeq">
-      <HintPath>..\packages\FSharp.Control.AsyncSeq.2.0.12\lib\net45\FSharp.Control.AsyncSeq.dll</HintPath>
+      <HintPath>..\packages\FSharp.Control.AsyncSeq.1.13\lib\net40\FSharp.Control.AsyncSeq.dll</HintPath>
     </Reference>
     <Reference Include="FSharp.Core">
       <HintPath>..\packages\FSharp.Core.4.1.17\lib\net45\FSharp.Core.dll</HintPath>
@@ -79,7 +85,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.ValueTuple">
-      <HintPath>..\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
