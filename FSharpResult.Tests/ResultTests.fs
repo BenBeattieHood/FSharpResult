@@ -1,10 +1,10 @@
-﻿module ValidationTests
+﻿module ResultTests
 
 open System
 open Xunit
 open Swensen.Unquote
 
-open Validation
+open Result
 
 type RoundTripValidationMonadData = {
     value: Result<int, string>
