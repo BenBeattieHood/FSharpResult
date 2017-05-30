@@ -1,10 +1,10 @@
-# FSharpValidation
+# FSharpResult
 
 General validation functions and monad
 
 Usage:
 ```
-open Validation
+open Result
 
 let getUser id =
     DB.getUser id
@@ -12,7 +12,7 @@ let getUser id =
 
     
 let displayNameResult =
-    validated {
+    result {
         let! user = getUser 32
 
         return sprintf "%s %s" user.firstName user.lastName
@@ -20,11 +20,11 @@ let displayNameResult =
 
 
 match displayNameResult with
-| Success displayName ->
+| Ok displayName ->
     displayName
     |> sprintf "Hi %s!"
 
-| Failure error ->
+| Error error ->
     error
     |> sprintf "Error: %s"
 
