@@ -1,4 +1,4 @@
-﻿module Validation
+﻿module Result
 
 open Microsoft.FSharp.Core
 
