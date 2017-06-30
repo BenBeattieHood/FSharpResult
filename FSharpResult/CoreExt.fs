@@ -8,6 +8,9 @@
 //    [<System.Runtime.CompilerServices.ExtensionAttribute>]
 //    let IsFSharp(str:string) = str = "F#"
 
+module Core =
+    let inline flip f a b = f b a
+
 module Option =
 
     let tryParseWith 

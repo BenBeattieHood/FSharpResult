@@ -79,7 +79,7 @@ let inline (>>.) m1 m2 = m1 >>= (fun _ -> m2)
 let inline (>=>) f g = fun x -> f x >>= g
 
 /// Right-to-left Kleisli composition
-let inline (<=<) x = FSharpx.Functional.Prelude.flip (>=>) x
+let inline (<=<) x = CoreExt.Core.flip (>=>) x
 
 type ResultBuilder() = 
     member this.Return a = Result.Ok a

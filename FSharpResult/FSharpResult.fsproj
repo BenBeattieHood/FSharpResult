@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>03b033ef-77df-4907-886a-cfef3e3f0e77</ProjectGuid>
+    <ProjectGuid>{d054483f-9820-45c2-b52c-dce7894583b7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>FSharpResult</RootNamespace>
     <AssemblyName>FSharpResult</AssemblyName>
@@ -62,30 +62,15 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Control.AsyncSeq">
-      <HintPath>..\packages\FSharp.Control.AsyncSeq.1.13\lib\net40\FSharp.Control.AsyncSeq.dll</HintPath>
-    </Reference>
     <Reference Include="FSharp.Core">
-      <HintPath>..\packages\FSharp.Core.4.1.17\lib\net45\FSharp.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FSharpx.Async">
-      <HintPath>..\packages\FSharpx.Async.1.13.2\lib\net45\FSharpx.Async.dll</HintPath>
-    </Reference>
-    <Reference Include="FSharpx.Collections">
-      <HintPath>..\packages\FSharpx.Collections.1.16.0\lib\net40\FSharpx.Collections.dll</HintPath>
-    </Reference>
-    <Reference Include="FSharpx.Core">
-      <HintPath>..\packages\FSharpx.Core.1.8.32\lib\40\FSharpx.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FSharpx.Extras">
-      <HintPath>..\packages\FSharpx.Extras.2.2.1\lib\net45\FSharpx.Extras.dll</HintPath>
+      <HintPath>..\..\Sunergeo\packages\FSharp.Core.4.2.1\lib\net45\FSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.ValueTuple">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+      <HintPath>..\..\Sunergeo\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
     </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
