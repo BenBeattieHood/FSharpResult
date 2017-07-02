@@ -11,9 +11,9 @@ let get =
     
 /// Wraps a function, encapsulates any exception thrown within to a Choice
 let tryWith 
-    (f: unit -> 'TOk) 
-    (onError: System.Exception -> 'TError) 
-    : Result<'TOk, 'TError> =
+    (f: unit -> 'Ok) 
+    (onError: System.Exception -> 'Error) 
+    : Result<'Ok, 'Error> =
     try
         f() |> Result.Ok
     with
@@ -90,9 +90,9 @@ let result = ResultBuilder()
 
 
 let ofOptionF 
-    (noneF: unit -> 'TNoValue) 
-    (maybeValue:'TValue option)
-    : Result<'TValue, 'TNoValue> =
+    (noneF: unit -> 'NoValue) 
+    (maybeValue:'Value option)
+    : Result<'Value, 'NoValue> =
 
     match maybeValue with
     | Some value -> value |> Result.Ok
@@ -104,8 +104,8 @@ let ofOption none =
 
 
 let ofSeq
-    (source: Result<'TOk, 'TError> seq)
-    : Result<'TOk seq, 'TError seq> =
+    (source: Result<'Ok, 'Error> seq)
+    : Result<'Ok seq, 'Error seq> =
 
     let failures =
         source

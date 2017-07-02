@@ -14,9 +14,9 @@ module Core =
 module Option =
 
     let tryParseWith 
-        (f: string -> bool * 'T) 
+        (f: string -> bool * 'a) 
         (s: string)
-        : 'T option =
+        : 'a option =
     
         match f s with
         | true, value -> Some value
