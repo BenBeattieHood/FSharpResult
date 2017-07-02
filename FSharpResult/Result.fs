@@ -1,4 +1,4 @@
-﻿module Result
+﻿module ResultModule
 
 open Microsoft.FSharp.Core
 
