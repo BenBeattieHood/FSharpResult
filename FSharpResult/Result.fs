@@ -42,8 +42,7 @@ let inline bimap f1 f2 =
     | Result.Error x -> Result.Error (f2 x)
 
 /// Transforms a Result's success value by using a specified mapping function.
-let map f =
-    bimap id f
+let inline map f = bimap f id
     
 /// Transforms a Results's error by using a specified mapping function.
 let inline mapFailure f = bimap id f
